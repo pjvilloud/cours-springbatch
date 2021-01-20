@@ -1,0 +1,1162 @@
+<!doctype html>
+
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1024" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>HumanCoders - Formation Spring Batch</title>
+
+  <meta name="description" content="" />
+  <meta name="author" content="Pierre-Julien VILLOUD" />
+
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+  <link href="css/font-awesome.min.css" rel="stylesheet" />
+<!--  <link href="css/idea.css" rel="stylesheet" />-->
+  <link href="css/style.css" rel="stylesheet" />
+  <link rel="stylesheet"
+        href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.4.1/build/styles/darcula.min.css">
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.4.1/build/highlight.min.js"></script>
+  <link rel="shortcut icon" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+  <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+  <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="my-navbar">
+  <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 0 124 54" width="105" role="img" aria-labelledby="jfultx13cb88pfbspsyiit8rmokhlv0 1bqq8it1dtd2ax3ez9lavx4gql3u7yf"><title id="jfultx13cb88pfbspsyiit8rmokhlv0">Logo Human Coders</title><desc id="1bqq8it1dtd2ax3ez9lavx4gql3u7yf">Logo de Human Coders, centre de formation pour développeurs</desc><g class="Human_logo" fill="#262626"><path d="m8.30426433 29.0930319c-2.75888455.2759246-4.57078708.4138227-5.43506549.4138227-1.15887791 0-2.0141668-.2845272-2.56573823-.8546087-.20226427-.2023532-.30346061-.4690333-.30346061-.8000401 0-.2757962.05522135-.5517207.16553564-.8275169.12880702-.2940286.52396076-.6250354 1.18610333-.992892.44151399-.2574355.81830342-.5146142 1.13139565-.7724348.53307871-.4229389.91937134-.6344083 1.15849265-.6344083.07332882 0 .25748562.0645836.55182828.1931087.31245013.1473995.5242176.2114694.63466031.1931087 2.44579232-.2759246 3.71472767-.4504158 3.80693449-.5241155.14717133-.0918037.25761404-.6159192.33119971-1.5722181l1.13113884-12.7709816c0-.9930204.022859-1.63192258.0690909-1.91709173.0457181-.28491237.1882663-.62079824.4276444-1.00663044.5144576-.84574932 1.1125177-1.55385734 1.793153-2.12419565.5147144-.42268207.9657316-.63427989 1.3516389-.63427989.4783711 0 .9197566.22071399 1.3244136.66188519.3862926.42332405.579439.86462364.579439 1.32415557 0 .29415693-.0922069.83701834-.27585 1.62717187-.0739709.36811345-.1655356 1.15865218-.2759783 2.37212978-.0369855.3497527-.1474282 1.2598288-.3310713 2.7308702l-1.296546 10.6746481 15.0081367-1.2134776.4689963-9.8471311c.2569719-5.47958761.662271-8.76205025 1.2134571-9.84738788.3311997-.64339606.892146-1.31439742 1.6830955-2.01351766.5886854-.55184919 1.1312673-.82764538 1.6278742-.82764538 1.0485636 0 1.5727812.70836481 1.5727812 2.12419565 0 .69873505-.3862926 3.66829483-1.1588779 8.90919297-.3862926 2.6850326-.6161676 6.519216-.6897532 11.5022934 1.0852922.4784063 1.6278741 1.1218023 1.6278741 1.9307018 0 .3681135-.1011963.6528974-.3034606.8552507-.0552213.0552106-.2574856.1748763-.6070496.3586121-.533464.2757962-.800196.9010883-.800196 1.8754911 0 .0925741.0735857.9012168.220757 2.4270836.0735857.9378098.2115107 1.5172643.4139034 1.7379783l.6897532.7999117c.0735857.0734429.1104427.1747479.1104427.3034014 0 .2759246-.1517945.7494518-.4552551 1.42071-.303589.6712581-.6392835 1.2735672-1.0070834 1.8069273-.662271.9372962-1.3244136 1.4062011-1.9866846 1.4062011-.8276782 0-1.4254814-.4591468-1.7928961-1.3785958-.4413855-1.1402915-.6897532-2.8414199-.7448461-5.1035136l-.0828321-3.2822059c0-.4039361-.4046569-.6068029-1.2139708-.6068029h-.2754647l-12.8015942 1.186129c-.5149712.0552106-.855032.1563873-1.0205676.3034015-.1104428.1104212-.1655357.3306216-.1655357.6616284v2.8138146c0 2.0412513.2482393 3.650576.7445893 4.826947.0552214.1292955.3311997.5338736.8278067 1.2138627.1104427.1465007.1655356.3396094.1655356.5791977 0 .5143574-.2853531 1.2224654-.8552889 2.1235537-.4598783.6988635-.8737816 1.1862575-1.2413247 1.4620537-.2943426.2023532-.6806352.3034015-1.1588779.3034015-1.0117065 0-1.84837428-.8642385-2.51051684-2.5929722-.47862788-1.2873057-.70824598-3.079339-.6894964-5.3782826zm29.43734827-1.2408261.4959648-5.6821976.082832-.7999117-.0552213-2.3445245c0-1.084824.2937005-2.0592269.8828995-2.9238505.7352146-1.0662066 1.5813855-1.599695 2.5378708-1.599695.9197566 0 1.3796349.8458777 1.3796349 2.5375047 0 .7357134-.2392498 2.105835-.717364 4.1098513-.478371 1.9309585-.7174923 3.8711617-.7174923 5.8200958 0 3.291964.3219533 5.2408981.9657316 5.847701.312707.3310068.6897532.4965102 1.1312672.4965102.974978 0 2.0050489-1.2046182 3.0902127-3.6137262.9007502-1.9856556 1.4710712-4.504928 1.7107062-7.5575604.0914363-1.1397779.3120649-1.9674233.6616289-2.4824226.5696789-.827517 1.2968029-1.4525523 2.1791887-1.8754912.3862927-.2023532.6989996-.3035299.938121-.3035299.8093139 0 1.2140992 1.2046182 1.2140992 3.6132127 0 .5517208-.0184927.9655435-.0552213 1.2413396l-.3311997 3.144693c-.1471714 1.1400346-.2206286 1.8852493-.2206286 2.2341032 0 .5700816.0827036 1.3610055.2482392 2.371873.2391213 1.3613906.533464 2.2252439.883028 2.5931006.1655357.1655033.404657.2481908.7173639.2481908h.3034607c.3127069-.0368498.5150996-.0550822.6069212-.0550822.1472997 0 .2759783.073443.386421.220714.312707.4228105.4689963 1.002265.4689963 1.7378499 0 1.1034416-.312707 1.977053-.9381209 2.6200639-.5701926.5707235-1.2691922.8552506-2.0968705.8552506-.5150996 0-.9840959-.1378981-1.4072455-.4138226-1.2506995-.8085143-2.0601418-1.9396896-2.4275565-3.3924987-.2206285-.8276454-.5063669-1.2413397-.8552889-1.2413397-.3494355 0-.7909495.5333601-1.3237714 1.5999518-.4046569.827517-1.1496315 1.5724749-2.2349238 2.2338465-1.2691922.7724348-2.4280701 1.1586521-3.4765053 1.1586521-1.2324636 0-2.2534165-.7724347-3.0620883-2.3166623-.6989996-1.3425163-1.0479215-3.3286855-1.0479215-5.9586359 0-.7723064.0276106-1.4792588.082832-2.1235537zm35.7542859.8000401 2.675282-4.8825428c.7540926-1.378981 1.4715849-2.5557371 2.1520918-3.5303967.9381209-1.3054097 1.9314632-1.9586923 2.9798984-1.9586923 1.2323351 0 1.9958025.6897473 2.2901451 2.0691135.2379655 1.158267.3484082 2.1973818.3310713 3.1168308l-.1104427 7.5850374c-.0183643 1.2874341.1828726 2.3173043.6070496 3.0897391.2023927.3678567.4587225.606803.7725853.7172242.0355728.0183607.2931869.0735713.7714295.1655034.1655356.0550822.2483677.2390747.2483677.5515924 0 .9565557-.3496925 1.7564674-1.0474079 2.3996066-.5701926.5143574-1.2968028.7724348-2.1797024.7724348-2.0234132 0-3.0351198-2.4361997-3.0351198-7.3097547v-.3863458l.0828321-4.8545523c0-.5881855-.2483677-.8824708-.7449746-.8824708-.441514 0-.8737816.5426046-1.2968029 1.6273003l-2.0141668 5.2132928c-.2759783.7539456-.487489 1.3607486-.6345319 1.8206657-.4600067 1.3792378-.837053 2.2712099-1.1302398 2.6757881-.8104697 1.0298702-1.7566812 1.5443559-2.8418451 1.5443559-.4598783 0-.8001959-.1016902-1.0209529-.3035298-.7173639-.6247786-1.0393173-1.6269151-.9657316-3.0064097v-.2205856l.1931463-6.6201359c-.128807-1.9488057-.220757-3.0433879-.2758499-3.2824626-.0737141-.2757962-.2298749-.4226821-.4691247-.441428-.1103143-.0179755-.3219533.1656318-.6345319.5518492-.3128354.386089-.5978032.809413-.8554173 1.268945l-.9381209 1.7651983c-.6252855 1.1580102-1.1405136 2.7402432-1.5438863 4.7442596-.4967354 2.3723865-.9013923 3.8068349-1.2140993 4.3028315-.2574856.3862174-.6713889.7500937-1.2417099 1.0897031-.5704495.3397378-1.0670564.510377-1.4902061.510377-.6064075 0-1.1127745-.4776358-1.5169177-1.4345767-.27585-.6246502-.3960527-1.2224654-.358682-1.7925469l.6898817-10.2336053.3034606-3.447966c0-.2939002-.0925921-1.1858723-.2759784-2.6755313-.0740993-.4966386-.1103143-.9652867-.1103143-1.4067147 0-.9007031.3489219-1.7283485 1.0484352-2.4824225.6432646-.7172242 1.3238999-1.0758363 2.0415207-1.0758363 1.2508279 0 1.8762418.8184008 1.8762418 2.4549457 0 1.1404198-.266732 3.2091481-.8001959 6.2061847l-.2759784 2.261837c-.0367286.2390747-.0552213.4321834-.0552213.5793261 0 .3681134.073714.5424762.2208854.5241155.0734572-.018104.3403176-.3586121.8001959-1.0206257l2.4267859-3.5031766c1.4163635-2.041123 2.7131664-3.0618771 3.8905371-3.0618771.6070496 0 1.1403851.2759246 1.6002635.8276454.5886853.7357133.8921459 1.5448696.9105102 2.4273404zm31.4786125 4.5511508h.634531c.625286 0 .938121.349496.938121 1.048231 0 .8092847-.294342 1.6368016-.882899 2.4828078-.680635.9562989-1.471585 1.4339347-2.372977 1.4339347-.570193 0-1.0668-.1834789-1.48995-.5518491-.09195-.0729294-.524217-.6706162-1.296802-1.7924185-.238993-.3678567-.478115-.5518492-.7162086-.5518492-.2587698 0-.6265697.2759246-1.1036565.8276454-1.5818992 1.7839443-3.2557483 2.6752744-5.0215475 2.6752744-1.4900776 0-2.7500234-.5338736-3.7802227-1.5999517-1.6922135-1.7098594-2.5372286-4.4407297-2.5372286-8.1924824 0-5.0379028 1.3244135-9.3596087 3.9720848-12.9638335.8828996-1.1951169 1.8578776-2.1878805 2.9248055-2.9790612 1.1954781-.8824708 2.2900167-1.3238987 3.2832306-1.3238987 1.120865 0 2.3257179.5888274 3.613403 1.7653267 1.030071.9562989 1.857749 2.583856 2.483291 4.8821576.717364 2.6480544 1.076046 4.4230109 1.076046 5.3235856 0 .4784063-.165664 1.3701216-.496735 2.6755313-.294343 1.2138627-.441386 2.2718519-.441386 3.171913 0 2.4459579.404657 3.6689368 1.2141 3.6689368zm-8.9110575-16.5500828c-.9932139 0-1.9129705.7543308-2.7591414 2.2618369-1.2875566 2.3170476-1.9313348 5.1855591-1.9313348 8.6060482 0 4.30296.9840959 6.4546325 2.9522877 6.4546325 1.0667995 0 1.9865561-.4781494 2.759013-1.4344483.7899222-.9747881 1.4164919-2.0965904 1.8763702-3.3655354.220757-.6431392.3310713-1.0103539.3310713-1.102928l-.1103143-1.8206657c0-.0552106.1655357-.3859606.496607-.992892.2931868-.5329749.4402298-1.0296135.4402298-1.489659 0-.2571786-.1286787-.937553-.3851369-2.0409945-.4413856-1.8756196-.9932139-3.1811576-1.6553564-3.9167426-.6806353-.7724347-1.3520243-1.1586521-2.0142952-1.1586521zm14.9800125 12.7983301 2.510774-4.3025747c1.82102-3.1445645 3.41101-4.7166542 4.773308-4.7166542 1.488793 0 2.252261 1.3513757 2.289118 4.0546406l.055092 7.309498c.018365 1.4711698.533464 2.2895706 1.545171 2.455074.588557.1102928.8829.3586121.8829.7448295 0 1.1402914-.459879 2.0874742-1.379635 2.8407779-.441386.367343-1.002461.5518491-1.683096.5518491-.826651 0-1.443846-.3862174-1.847475-1.1587805-.404657-.734943-.662143-1.6913703-.772457-2.8683832-.055221-.7172242-.082832-2.1057065-.082832-4.165447 0-2.3895917-.073586-3.7600985-.220757-4.109466-.093106-.2023533-.211511-.3034015-.358682-.3034015-.257614 0-.588685.2344524-.993342.7031005-.404657.4690333-.763339 1.0253764-1.076046 1.6689008-1.177242 2.464447-1.931463 4.348926-2.262535 5.6545924-.570192 2.1334402-1.112774 3.4116298-1.627874 3.8339267-.459878.3683702-1.020824.5518491-1.682967.5518491-.515228 0-.882001-.1016902-1.102629-.3035298-.479399-.4966386-.717364-1.5257385-.717364-3.0890972 0-.3310068.017337-.6896189.055093-1.0758363l1.214099-12.4126263c-.275978-.3122609-.413903-.5790693-.413903-.7996549 0-.9009599.513944-1.8296536 1.544015-2.7859525.588557-.5698247 1.195606-.8552506 1.82102-.8552506.809442 0 1.213971.4509293 1.213971 1.351504 0 .6255489-.045847 1.3241556-.137925 2.0965904-.036729.2390747-.285096 1.1125577-.744975 2.6203206zm-75.3115254 19.522981c0-2.6815659.9806285-4.0229266 2.9418855-4.0229266.616296 0 1.2480026.0977099 1.8964041.2918458l.3161743.0971963v1.7626304h-1.2640553v-.9000611c-.2920311-.0643268-.567881-.104515-.8265224-.1210781h-.1220007c-.5506725 0-.9644474.2142941-1.2397836.6441664-.2753363.4292303-.4133896 1.1786821-.4133896 2.2482269.0160527 1.2644511.1621966 2.0989015.4380466 2.5034796.1453734.2113411.3115511.3551454.4978911.432055.1862116.0771665.4253329.1150435.7172355.1150435.6645826.016178 1.3290367-.0803763 1.9936193-.2919742l.2189591 1.0574756c-.2672457.0897493-.6305508.1724368-1.0881175.2494748-.4575667.0770381-.8369246.1154287-1.1364041.1154287-.9888475.0160496-1.7239336-.3016039-2.2067994-.9539878-.48171-.6522554-.7231429-1.7280917-.7231429-3.2269952zm13.5061159 4.180983c-.9887191 0-1.6940114-.3401229-2.1153632-1.0212676-.4219938-.6803744-.6323487-1.7234695-.6323487-3.1292854 0-1.4056875.2167759-2.432733.650713-3.0810081.4334235-.6482752 1.1380736-.9723485 2.1153632-.9723485.9760053 0 1.6710239.3206066 2.0842851.9602792.4132612.6403145.6196349 1.6794293.6196349 3.117858 0 1.4379151-.2063737 2.4849905-.6196349 3.1413546s-1.1140588.9844178-2.1026494.9844178zm-.0241433-1.1424742c.5667252 0 .951862-.2086447 1.1542547-.6258057.2022643-.4172894.3039743-1.2092405.3039743-2.3758532 0-1.1667412-.0993984-1.9448254-.2976816-2.333996-.1982832-.3890421-.5713484-.5833063-1.1180398-.5833063-.5472051 0-.9300304.2109558-1.1491179.6322255-.2189591.4211413-.3281176 1.1723906-.3281176 2.2540048 0 1.0822561.0970869 1.8580292.2919027 2.327576.1943021.4700605.5748158.7051549 1.1428252.7051549zm8.3751531 1.0212677v-7.960983h1.8964041c.6397972 0 1.15708.0528994 1.550179.1575428.3927137.1056705.7272524.304557 1.0025886.5958892.2758499.2914606.4704089.6948832.584319 1.2092405.1126259.5143574.1701588 1.2442928.1701588 2.1878805 0 .9438444-.1160932 1.7035679-.3472524 2.2787853-.2307739.5753458-.5773842.9741461-1.0395741 1.1971712-.4616762.2230251-1.1099492.3344735-1.9445622.3344735zm3.4282188-1.6167717c.1863399-.2108275.3138627-.5004905.3828252-.8688608.0689625-.3683702.103508-.8707867.103508-1.5075061 0-.6356922-.0287665-1.1361827-.0850152-1.5010863-.0570193-.3643899-.17658-.654053-.358682-.8688607-.1828726-.2144226-.407097-.3519355-.6749848-.4127955-.2672456-.0608601-.648273-.0912901-1.1425683-.0912901h-.3887327v5.7729742h.364461c.4702805 0 .8403919-.0345387 1.1122608-.1034878.2713552-.0684354.5007164-.2080027.686928-.4190869zm7.7800467 1.6167717v-7.960983h4.6560591v1.1426026h-3.3914901v2.211377h3.062602v1.0944538h-3.062602v2.3700754h3.4282188v1.1424742zm13.2266702-2.905233c-.4380466.0249089-.6817911.0362079-.7300777.0362079h-.5713484v2.8690251h-1.264569v-7.960983h2.5049948c.8828995 0 1.5519769.1965754 2.0050488.5897262.4540993.3930224.6816627 1.0470754.6816627 1.9620306 0 1.0540088-.4540993 1.7955-1.3621696 2.2247303.5597905 1.0614558 1.0289151 2.1225265 1.4104562 3.1844959h-1.3610138c-.3657452-.9805659-.8025075-1.9489341-1.312984-2.905233zm-.3046164-3.937286h-.9968097v2.8067527h1.009395c1.0852923 0 1.62903-.4573492 1.62903-1.3734599 0-.5102487-.1299628-.8764362-.3897601-1.0993329-.2586414-.2230251-.6760121-.3339599-1.2518552-.3339599zm8.7406414 1.0080428c0-1.4989036.8990807-2.2482269 2.6982695-2.2482269.6323487 0 1.3531801.1418784 2.1637782.42525l-.2794458 1.1063947c-.8265224-.259233-1.4773638-.3908397-1.9508548-.3949484-.4737479-.0046223-.8163771.0747269-1.026732.2367636-.211639.1621651-.3161743.4460503-.3161743.8506284 0 .2759246.1173775.5085795.3518756.6988634.2356539.1907976.6322203.3587405 1.1921391.5045992.8506657.2270055 1.4335721.5183377 1.7497464.874767.3161744.3568145.4747753.8872215.4747753 1.5923764 0 1.5317731-.9161608 2.2972744-2.7475835 2.2972744-.6083338 0-1.3738559-.1299375-2.2982357-.3891705l.2553024-1.1545435c0 .008089.1263671.0448105.3770463.1091373.7863264.2028668 1.3955592.3040434 1.8302669.3040434.4334234 0 .7575599-.1092656.9725379-.328182.2138222-.2184029.3219533-.4941991.3219533-.8263614 0-.3321624-.0920783-.5874151-.2736667-.7655014-.1828726-.1782147-.5172828-.3362711-1.0024602-.4741692-.8760932-.243055-1.5094693-.5431182-1.9026967-.8994191-.393099-.3564294-.5898412-.8632113-.5898412-1.5195754z"></path></g></svg>
+  <a class="navbar-brand" href="index.html">
+    <img src="img/spring-logo.svg" height="30" alt="">
+  </a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="nav nav-pills mr-auto">
+
+    </ul>
+    <span class="navbar-text">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <form class="form-inline my-2 my-lg-0" onsubmit="search()">
+              <div class="input-group">
+                <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="searchNb"></span>
+                  <button class="btn btn-primary" type="submit"><i class="fa fa-icon fa-search"></i></button>
+                </div>
+              </div>
+
+
+            </form>
+            &nbsp;
+            <a class="btn btn-primary" href="mailto:pjvilloud@protonmail.com"><i class="fa fa-icon fa-envelope"></i></a>
+            &nbsp;
+            <a class="btn btn-primary" href="https://github.com/pjvilloud" target="_blank"><i class="fa fa-icon fa-github"></i></a>
+            &nbsp;
+            <a class="btn btn-primary" href="https://linkedin.com/pjvilloud" target="_blank"><i class="fa fa-icon fa-linkedin"></i></a>&nbsp;
+            <a class="btn btn-primary" href="#" id="numSlide">1</a>
+        </div>
+    </span>
+  </div>
+</nav>
+<div class="progress">
+  <div id="progress" class="progress-bar" style="width: 0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="container-fluid" id="impress">
+
+  <div id="accueil" class="step slide" data-rel-x="0" data-y=0>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container text-center">
+        <h1 class="display-3">Bienvenue !</h1>
+        <p class="lead">
+        <h2>Pierre-Julien VILLOUD</h2>
+        <div class="big-top-margin">
+          <img src="img/pjvilloud.jpg" class="img-bienvenue rounded mx-auto d-block" alt="Pierre-Julien VILLOUD">
+        </div>
+        <div class="big-top-margin">
+          <h3><i class="fa fa-icon fa-envelope-square"></i>&nbsp;<a href="mailto:pjvilloud@protonmail.com">pjvilloud@protonmail.com</a></h3>
+          <h3><i class="fa fa-icon fa-github-square"></i>&nbsp;<a href="https://github.com/pjvilloud" target="_blank">https://github.com/pjvilloud</a></h3>
+          <h3><i class="fa fa-icon fa-linkedin-square"></i>&nbsp;<a href="https://linkedin.com/pjvilloud" target="_blank">https://linkedin.com/pjvilloud</a></h3>
+          <h3><i class="fa fa-icon fa-globe"></i>&nbsp;<a href="https://pjvilloud.github.io" target="_blank">https://pjvilloud.github.io</a></h3>
+        </div>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="introduction" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Introduction</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le framework Spring est un framework Java Open Source qui permet aux développeurs de se concentrer sur leur application en laissant la gestion des éléments d'infrastructure au framework.
+
+          </div>
+        </div>
+        <div class="container">
+          <img src="img/springframework.png" alt="Spring logo" width="950">
+        </div>
+        <div class="container-fluid small-font little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;L'objectif est de développer rapidement et avec peu de code des applications riches et fiables dans un contexte d'entreprise.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="introduction-historique" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Historique</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Spring a été créé en 2003 pour fonctionner de manière complémentaire avec le standard J2EE de l'époque, alors relativement complexe. L'idée était de faciliter les tâches communes et de promouvoir les bonnes pratiques de développement.
+          </div>
+        </div>
+        <div class="container-fluid small-font">
+          <div class="row">
+            <div class="col-2 text-right">
+              <img src="img/springhistory2.png" height="615">
+            </div>
+            <div class="col-10 text-left">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <b>0.9</b> - Première version !
+                </li>
+                <li class="list-group-item"><b>1.0</b> - Optimisations diverses</li>
+                <li class="list-group-item"><b>2.0</b> - Simplification des configurations XML, support de Groovy, de JPA</li>
+                <li class="list-group-item"><b>2.5</b> - Configuration par annotations, support de Java 6, auto-détection des composants</li>
+                <li class="list-group-item"><b>3.0</b> - Spring expression language, support des bases de données intégrées, validation des <em>model</em>, support de REST</li>
+                <li class="list-group-item"><b>3.1</b> - Profils de beans, abstraction de cache</li>
+                <li class="list-group-item"><b>4.0</b> - Support de Java 8, apparition de Spring Boot</li>
+                <li class="list-group-item"><b>4.2</b> - Améliorations du Code Container et de la couche d'accès aux données</li>
+                <li class="list-group-item"><b>4.3</b> - Améliorations du cache et des modules webs</li>
+                <li class="list-group-item"><b>5.0</b> - Spring WebFlux, support de Kotlin</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Aujourd'hui, les infrastructures ont évolué et les applications sont maintenant développées en devops pour être déployées sur des plateformes de cloud. Spring a suivi cette évolution et le framework s'est enrichi de fonctionnalités qui vont dans ce sens.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="introduction-projets" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Les différents projets</h1>
+        <div class="container-fluid">
+          <img src="img/springprojects2.png" alt="">
+        </div>
+      </div>
+      <div class="container-fluid little-top-margin text-center">
+        <div class="alert alert-primary small-font" role="alert">
+          <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les concepts centraux de Spring sont l'<b>inversion de contrôle (ou IoC)</b> et l'<b>injection de dépendance (ou DI)</b>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="introduction-ioc" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">L'inversion de contrôle (IoC)</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;L'inversion de contrôle ou <em>IoC</em> est au cœur de Spring. C'est le framework qui coordonne le flot d'exécution du programme et qui appelle vos propres composants logiciels.
+          </div>
+        </div>
+        <div class="container-fluid small-font big-top-margin">
+          <img src="img/K1337.png">
+        </div>
+        <div class="container-fluid big-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;On parle <em>d'inversion de contrôle</em> car c'est traditionnellement l'inverse en programmation classique. Vous coordonnez le flot d'exécution et vous gérez le cycle de vie et les dépendances entre vos composants.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="introduction-di" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">L'injection de dépendances (DI)</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;C'est une implémentation de l'inversion de contrôle utilisée dans les langages orientés objet. Le principe est qu'au lieu de coder en dur les dépendances entre les composants, vous déléguez l'instantiation et la gestion de ces composants au framework qui les stockera dans son <b>conteneur</b> et pourra vous les <b>fournir</b> à la demande.
+          </div>
+        </div>
+        <div class="container little-top-margin smaller-font">
+          <div class="row">
+            <div class="col-5 big-top-margin">
+              <img src="img/traditional-vs-di.gif">
+            </div>
+            <div class="col-7">
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-success">Réduction au maximum des dépendances entre les composants logiciels</li>
+                <li class="list-group-item list-group-item-success">Maintenance et évolutions plus maitrisées</li>
+                <li class="list-group-item list-group-item-success">Utilisation possible d'implémentations différentes d'un composant sans tout modifier.</li>
+                <li class="list-group-item list-group-item-success">Plus de gestion manuelle du cycle de vie des composants.</li>
+                <li class="list-group-item list-group-item-success">Patterns de développement comme le <em>singleton</em> utilisables très facilement.</li>
+                <li class="list-group-item list-group-item-success">Code plus facile à tester (mocks), à lire et à réutiliser.</li>
+                <li class="list-group-item list-group-item-warning">Ajout d'une dépendance à un framework potentiellement <em>lourd</em> ?</li>
+                <li class="list-group-item list-group-item-warning">Perte de contrôle ?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font little-top-margin" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;En réalité, l'<b>injection de dépendances</b> vous permet de vous concentrer sur votre cœur de métier et de produire du code de meilleure qualité !
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springcore" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Spring Core <img src="img/spring-core.svg" height="100" alt=""></h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Spring Core est un des projets du framework Spring mais en est le socle. Ce framework implémente l'injection de dépendances. On appelle <b>Core Container</b> l'ensemble des modules suivants :
+          </div>
+        </div>
+        <div class="container-fluid small-font big-top-margin">
+          <div class="row">
+            <div class="col-3 rounded border bg-primary p-4">Beans</div>
+            <div class="col-3 rounded border bg-primary p-4">Core</div>
+            <div class="col-3 rounded border bg-success p-4">Context</div>
+            <div class="col-3 rounded border bg-warning p-4">SpEL</div>
+          </div>
+        </div>
+        <div class="container-fluid small-font little-top-margin">
+          <div class="row">
+            <div class="col-6 rounded border border-primary">
+              <em>Core</em> et <em>Beans</em> sont les modules qui implémentent l'inversion de contrôle et l'injection de dépendences.
+            </div>
+            <div class="col-3 rounded border border-success">
+              <em>Context</em> est une sorte de registre permettant de construire, stocker et injecter les différents composants de votre application.
+            </div>
+            <div class="col-3 rounded border border-warning">
+              <em>SpEL</em> ou <em>Spring Expression Language</em> permet de consulter et manipuler le <em>graph d'objets</em> à l'exécution.
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid big-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;On parle bien ici de <b>conteneur</b>, Spring est considéré comme un <b>conteneur léger</b> car il peut stocker n'importe quel type d'objets contrairement à des <b>conteneurs lourds</b> dont les objets doivent obligatoirement implémenter certaines interfaces (ex : serveurs d'application).
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springcore-beans" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Les <code>Beans</code> <img src="img/coffee_bean.png" height="90"></h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <em>beans</em> sont tout simplement les objets gérés par le conteneur Spring.
+          </div>
+        </div>
+        <div class="container-fluid small-font little-top-margin">
+          <div class="row">
+            <div class="col-6">
+              <img src="img/beans.png">
+              <img src="img/container-magic.png">
+            </div>
+            <div class="col-6 mt-5">
+              <ul class="list-group mt-5">
+                <li class="list-group-item mt-5">Un bean doit être décrit dans une <b>configuration de bean</b> à fournir au conteneur Spring.</li>
+                <li class="list-group-item">Lorsqu'il y a des dépendances entre des beans, Spring lie ces derniers entre eux par <b>injection</b>.</li>
+                <li class="list-group-item">Les déclarations de beans permettent aux beans d'être instantiés, stockés, gérés et détruits par le conteneur Spring via l'<code>ApplicationContext</code>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voyons maintenant chacune de ces notions.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springcore-beanconfiguration" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Les configurations de <code>Beans</code> <img src="img/coffee_bean.png" height="90"></h1>
+        <div class="container-fluid" style="margin-top:-25px">
+          <div class="alert alert-primary small-font" role="alert" >
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voici comment définir un <em>bean</em> dans une application Spring (XML à gauche et annotations Java à droite) :
+          </div>
+        </div>
+        <div class="container-fluid small-font">
+          <div class="row">
+            <div class="col-6">
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-secondary">Eléments à définir</li>
+                <li class="list-group-item">La classe</li>
+                <li class="list-group-item">Le nom</li>
+                <li class="list-group-item"><span data-html="true" data-template='<div class="popover large-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>' data-trigger="hover" data-toggle="popover" data-placement="right" data-content="<ul><li><code>singleton</code> : (par défaut) Un seul bean instantié par contexte.</li><li><code>prototype</code> : Un nouveau bean est instancié à chaque fois que ce bean est demandé.</li><li><code>request</code> : (web) Un bean instantié à chaque requête HTTP.</li><li><code>session</code> : Un bean est instancié pour chaque session.</li><li><code>application</code> : Un bean est instancié pour toute la durée de vie de la Servlet.</li><li><code>websocket</code> : Un bean est instancié pour toute la durée de vie de la socket.</li></ul>" >Le scope</span></li>
+                <li class="list-group-item"><span data-html="true" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="Une bonne pratique consiste à utiliser les arguments de constructeurs pour les propriétés obligatoires et les setters pour les propriétés facultatives.">Les arguments du constructeur et les autres propriétés</span></li>
+                <li class="list-group-item">L'initialisation/destruction</li>
+              </ul>
+            </div>
+            <div class="col-6 text-left">
+              <pre><code class="java">//Soit la classe suivante que l'on faire gérer par Spring
+public class BeanExemple{
+  private String msg;
+  private String nom;
+  public void getNom(){return nom;}
+  public void setNom(String n){nom = n;}
+  public BeanExemple(String m){msg=m;}
+  public void init() {}
+  public void cleanup() {}
+}</code></pre></div>
+          </div>
+        </div>
+        <hr>
+        <div class="container-fluid small-font">
+          <div class="row">
+            <div class="col-6 text-left" style="margin-left:-80px">
+              <pre><code class="xml">&lt;!-- applicationContext.xml --&gt;
+&lt;?xml version = "1.0" encoding = "UTF-8"?&gt;
+&lt;beans xmlns = "..." ... &gt;
+&lt;bean name="beanExemple" class="com.humancoders.BeanExemple"
+  scope="prototype" init-method="init" destroy-method="cleanup"&gt;
+  &lt;constructor-arg value = "Hello "/&gt;&lt;!-- OU --&gt;
+  &lt;constructor-arg index = "0" value = "Hello "/&gt;&lt;!-- OU --&gt;
+  &lt;constructor-arg type = "java.lang.String" value = "Hello "/&gt;
+  &ltproperty name = "nom" value = "World"/&gt;
+&lt;/bean&gt;
+&lt;/beans&gt;</code></pre>
+            </div>
+            <div class="col-6 text-left">
+              <pre><code class="java">@Configuration
+public class SpringConfig {
+  @Bean(initMethod = "init", destroyMethod = "cleanup")
+  @Scope("prototype")
+  public BeanExemple beanExemple(){
+    BeanExemple be = new BeanExemple("Hello ");
+    be.setNom("World");
+    return be;
+  }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="springcore-injection" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">L'injection de beans</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voici comment <em>injecter</em> un bean dans un autre :
+          </div>
+        </div>
+        <div class="container small-font">
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="col-9 text-left">
+              <pre><code class="java">public class BeanExemple{
+  private AutreBeanEx autreBean;
+  public void getAutreBean(){ return autreBean; }
+  public void setAutreBean(String b){
+    autreBean = b;
+  }
+}</code></pre></div>
+          </div>
+        </div>
+        <hr>
+        <div class="container-fluid small-font">
+          <div class="row">
+            <div class="col-6 text-left">
+              <pre><code class="xml">&lt;!-- applicationContext.xml --&gt;
+&lt;?xml version = "1.0" encoding = "UTF-8"?&gt;
+&lt;beans xmlns = "..." ... &gt;
+  &lt;bean name="autreBean" class="com.humancoders.AutreBeanEx"/&gt;
+
+  &lt;bean name="beanExemple" class="com.humancoders.BeanExemple"&gt;
+    &lt;property name="autreBean" ref="autreBean"/&gt;
+  &lt;bean/&gt;
+&lt;/beans&gt;</code></pre>
+            </div>
+            <div class="col-6 text-left">
+              <pre><code class="java">@Configuration
+public class SpringConfig {
+  @Bean
+  public BeanExemple beanExemple(){
+    BeanExemple b = new BeanExemple();
+    b.setAutreBean(autreBeanEx());
+  }
+  @Bean
+  public AutreBeanEx autreBeanEx(){
+    return new AutreBeanEx();
+  }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="springcore-context" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3"><code>ApplicationContext</code></h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Maintenant que nous avons définis nos <em>beans</em> et les relations entre ces derniers, voyons comment les stocker dans l'<code>ApplicationContext</code> pour qu'ils puissent être gérés par le conteneur.
+          </div>
+        </div>
+        <div class="container small-font">
+          <div class="row text-left">
+              <pre><code class="java">package com.humancoders;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.*;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MainApp {
+   public static void main(String[] args) {
+      ApplicationContext ctx = null;
+      //Configuration Java
+      ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
+      //OU Configuration XML
+      ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+      BeanExemple be = ctx.getBean(BeanExemple.class);
+      //be peut être utilisé dans ce main et les beans déclarés
+      //dans la configuration ont été intégrés dans le conteneur
+   }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springcore-simplifier" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Simplifier et automatiser</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est possible de simplifier les déclarations de beans et d'automatiser les injections en faisant <em>scanner</em> un package par Spring à la recherche de beans qui comporteront des annotations spécifiques.
+          </div>
+        </div>
+        <div class="container-fluid small-font">
+          <div class="row">
+            <div class="col-6 text-left">
+              <pre><code class="java">//Annotation des beans à gérer par Spring avec @Component
+//(seulement pour les singletons)
+@Component
+public class BeanExemple{
+  //Injection d'un bean avec @Autowired, l'injection se fait par
+  //type. Attention, si deux beans existent du même type,
+  //cette injection échouera !
+  @Autowired
+  private AutreBeanEx autreBean;
+}
+
+@Component
+public class AutreBeanEx{
+}</code></pre></div>
+            <div class="col-6 text-left">
+              <pre><code class="java">@Configuration
+//L'annotation @ComponentScan permet de dire à Spring
+//de chercher les beans dans toutes les classes de ce
+//ce package.
+@ComponentScan(basePackages = "com.humancoders")
+public class SpringConfig {
+
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-primary small-font" role="alert">
+          <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les annotations <code>@Service</code>, <code>@Controller</code>, <code>@Repository</code> sont des spécialisations de
+          <code>@Component</code> et permettent à ces beans particuliers d'être traités de manière optimale par Spring.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springcore-simplifier-cas" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Cas particuliers (1/2)</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voici quelques syntaxes complémentaires répondant à des besoins particuliers. Ici, injecter un bean particulier alors qu'il y en a deux déclarés qui sont du même type.
+          </div>
+        </div>
+        <div class="container-fluid small-font">
+          <div class="row">
+            <div class="col-6 text-left">
+              <pre><code class="java">@Component
+public class BeanExemple{
+  //Utiliser @Resource pour injecter explicitement par nom
+  @Resource(name = "autreBean1")
+  private AutreBeanEx autreBean1;
+  //Ici @Autowired fonctionne car @Primary a été mis
+  //sur le bean principal
+  @Autowired
+  private AutreBeanEx autreBean;
+}
+
+public class AutreBeanEx{
+  private String nom;
+  private AutreBeanEx(String n){nom = n;}
+}</code></pre></div>
+            <div class="col-6 text-left">
+              <pre><code class="java">@Configuration
+@ComponentScan(basePackages = "com.humancoders")
+public class SpringConfig {
+    @Bean(name = "autreBean1")
+    public AutreBeanEx autreBean1(){
+        return new AutreBeanEx("Hello");
+    }
+    @Bean(name = "autreBean")
+    //L'annotation @Primary permet de lever le doute
+    //lorsque plusieurs beans ont le même type.
+    @Primary
+    public AutreBeanEx autreBean(){
+        return new AutreBeanEx("World");
+    }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-primary small-font" role="alert">
+          <i class="fa fa-icon fa-info-circle"></i>&nbsp;<code>@Qualifier</code> peut être utilisé pour mettre des sortes de <em>tags</em> sur les beans afin de rendre plus souple l'injection automatique.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springcore-simplifier-cas-2" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Cas particuliers (2/2)</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est possible de définir tous les éléments définis dans une configuration XML dans une configuration Java basée sur les annotations.
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin small-font">
+          <div class="row">
+            <div class="col-6 text-left">
+              <pre><code class="java">public class AutreBeanEx{
+  @PostConstruct //remplace init-method
+  public void init() {
+      // Instructions à exécuter après l'instanciation
+  }
+
+  @PreDestroy //remplace destroy-method
+  public void cleanup() {
+      // Instructions à exécuter avant la destruction
+  }
+}</code></pre></div>
+            <div class="col-6 text-left">
+              <pre><code class="java">@Configuration
+public class SpringConfig {
+    @Bean
+    @Scope("prototype")
+    public AutreBeanEx autreBean(){
+        return new AutreBeanEx();
+    }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-primary little-top-margin small-font" role="alert">
+          <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les configurations par Java ou XML sont équivalentes en fonctionnalités mais ont chacune leurs avantages et inconvénients. De nos jours, la configuration Java est tout de même privilégiée.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springcore-properties" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Les fichiers <code>.properties</code></h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Vous pouvez définir des informations de configuration dans des fichiers <code>.properties</code> comme nous l'avons vu dans des cours précédents. Vous pouvez récupérer ces propriétés qui sont stockées dans le conteneur Spring, soit comme paramètres de construction de beans, ou directement dans votre application.
+          </div>
+        </div>
+        <div class="container-fluid small-font">
+          <div class="row text-left">
+            <div class="col-4"></div>
+            <div class="col-4">
+                        <pre><code class="ruby">#app.properties
+humancoders.name=Humancoderz
+humancoders.message=Hello</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid small-font">
+          <div class="row text-left">
+            <div class="col-8">
+                            <pre><code class="xml">
+&lt;beans&gt;
+&lt;bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"&gt;
+    &lt;property name="locations" value="classpath:app.properties"/&gt;
+&lt;/bean&gt;
+&lt;!-- OU --&gt;
+&lt;context:property-placeholder location="classpath:app.properties"/&gt;
+
+&lt;bean id="beanExemple" class="com.humancoders.BeanExemple"&gt;
+    &lt;property name="nom" value="${humancoders.nom}"/&gt;
+    &lt;property name="message" value="${humancoders.message}"/&gt;
+&lt;/bean&gt;
+&lt;/beans&gt;</code></pre>
+            </div>
+            <div class="col-4 pr-0" style="margin-left: -45px; margin-right: 0;">
+                            <pre><code class="java">@Configuration
+@PropertySource("classpath:app.properties")
+public class SpringConfig {
+    @Value("${humancoders.nom}")
+    private String nom;
+    @Value("${humancoders.message}")
+    private String message;
+    @Bean(name = "beanExemple")
+    public BeanExemple beanExemple(){
+        return new
+          BeanExemple(message, nom);
+    }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-primary small-font" role="alert">
+          <i class="fa fa-icon fa-info-circle"></i>&nbsp;Ainsi lorsque vous définissez des éléments dans votre <code>application.properties</code> (comme par exemple l'URL de connexion à la BDD), Spring récupère automatiquement ces valeurs pour paramétrer la création des beans nécessaires (à la connexion à la base de données par exemple).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springboot" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Spring Boot <img src="img/spring-boot-logo.jpg" height="100" alt=""></h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;<b>Spring Boot</b> est un module optionnel du framework Spring qui permet la création aisée d'application utilisant Spring afin de :
+          </div>
+        </div>
+        <div class="container small-font big-top-margin">
+          <ul class="list-group">
+            <li class="list-group-item">Démarrer très <b>rapidement</b> le développement de votre application (notamment les applications web) sans être ralenti par des éléments de configuration</li>
+            <li class="list-group-item">Profiter de <b>librairies tierces</b> directement disponibles mais facilement désactivables ou remplaçables par l'ajout explicite de dépendances.</li>
+            <li class="list-group-item"><b>Externaliser la configuration</b> dans des fichiers de configurations (<code>.properties</code> ou <code>YAML</code>).</li>
+            <li class="list-group-item">Avoir des <b>fonctionnalités supplémentaires</b> comme des serveurs intégrés, du monitoring, des vérifications au niveau de la santé et de la sécurité de votre application...</li>
+          </ul>
+        </div>
+        <div class="container-fluid big-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Pour démarrer un nouveau projet avec Spring Boot, il est recommandé d'utiliser
+            <a href="https://start.spring.io" target="_blank">Spring Initializr</a>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springboot-dependances" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">La gestion des dépendances</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est recommandé d'utilisé Spring Boot dans le cadre d'un gestionnaire de dépendance. Spring Boot supporte <code>maven</code> et <code>Gradle</code>. Exemple avec Maven :
+          </div>
+        </div>
+        <div class="container smaller-font text-left little-top-margin">
+                    <pre><code class="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+	&lt;parent&gt;
+		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+		&lt;version&gt;2.4.1.RELEASE&lt;/version&gt;
+		&lt;relativePath/&gt;
+	&lt;/parent&gt;
+	&lt;groupId&gt;com.humancoders.java&lt;/groupId&gt;
+	&lt;artifactId&gt;javahuman&lt;/artifactId&gt;
+	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+	&lt;name&gt;javahuman&lt;/name&gt;
+	&lt;description&gt;TP sur Spring&lt;/description&gt;
+	&lt;dependencies&gt;
+		&lt;!-- Ajout de dépendances starter en fonction des besoins--&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+		&lt;/dependency&gt;
+		&lt;!-- Dépendance à MySQL =&gt; désactivation de la BDD intégrée et configuration optimisée pour MySQL--&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;mysql&lt;/groupId&gt;
+			&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+			&lt;scope&gt;runtime&lt;/scope&gt;
+		&lt;/dependency&gt;
+		&lt;!-- Autres dépendances déclarées de manière classique--&gt;
+	&lt;/dependencies&gt;
+&lt;/project&gt;</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springboot-main" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">L'application</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;La classe d'<b>application</b> Spring Boot est le point d'entrée de votre application.
+          </div>
+        </div>
+        <div class="container small-font text-left little-top-margin">
+                    <pre><code class="java">package com.example.myapplication;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+<span data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Cette annotation permet de définir le package de base à faire scanner par Spring (package dans lequel se situe la classe) et active l'auto-configuration">@SpringBootApplication</span>
+//équivalent à @Configuration @EnableAutoConfiguration @ComponentScan
+public class Application {
+
+	public static void main(String[] args) {
+		<span data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Cette méthode permet d'auto-configurer l'application selon les règles par défaut ou celles surchargées par l'utilisateur et crée automatiquement l'ApplicationContext, avec les beans scannés par Spring grâce aux annotations.">SpringApplication.run(Application.class, args);</span>
+	}
+
+}</code></pre>
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Avec cette classe, tout le travail de configuration est fait par Spring Boot, et de nombreuses fonctionnalités disponibles par défaut (base de données intégrée, logging, serveur web intégré...)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Spring Batch <img src="img/spring-batch.svg" alt="SB" height="100"></h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Spring Batch est un framework conçu pour le développement de batchs robustes, fiables et performants.
+            Il propose un ensemble de fonctionnalités permettant de développer rapidement tout type de batch.
+          </div>
+        </div>
+        <div class="container little-top-margin">
+          <img src="img/sb.png" height="500" alt="">
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il répond à des problématiques que l'on rencontre régulièrement lors du développement de batchs, notamment
+            la reprise sur erreur, le fait d'ignorer certains enregistrement, ou encore d'avoir un flot d'exécution conditionnel.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-proscons" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Avantages/Inconvénients</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voici une liste (subjective !) des avantages/inconvénients de ce framework
+          </div>
+        </div>
+        <div class="container-fluid small-font big-top-margin">
+          <div class="row">
+            <div class="col">
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-success">Fonctionnement en <em>chunk</em></li>
+                <li class="list-group-item list-group-item-success">Gestion des transactions</li>
+                <li class="list-group-item list-group-item-success">Possibilités d'arrêt, de redémarrage</li>
+                <li class="list-group-item list-group-item-success">Possibilités d'ignorer des enregistrements ou de réessayer en cas d'erreur</li>
+                <li class="list-group-item list-group-item-success">Flexibilité</li>
+                <li class="list-group-item list-group-item-success">Testabilité</li>
+                <li class="list-group-item list-group-item-success">Monitoring</li>
+              </ul>
+            </div>
+            <div class="col big-top-margin">
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-danger"><em>Vocabulaire</em> des batchs à maîtriser</li>
+                <li class="list-group-item list-group-item-danger">Nécessité de connaître l'ensemble des possibilités du framework pour l'utiliser efficacement</li>
+                <li class="list-group-item list-group-item-danger">Complexité relative</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid big-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Pour des batchs très (très) simples, Spring Batch n'est pas forcément le framework le plus adapté. Il devient cependant
+            très pertinent pour des batchs plus complexes, ou lorsqu'on souhaite profiter de ces fonctionnalités pratiques.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-concepts" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Principaux concepts</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voici un schéma d'architecture d'un batch développé avec Spring Batch. Nous allons détailler la plupart des notions présentées dans le schéma.
+          </div>
+        </div>
+        <div class="container little-top-margin">
+          <img src="img/springbatcharchi.png" height="730" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-job" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Job</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le <strong>Job</strong> représente le batch en lui-même. C'est la notion la plus haut niveau du framework
+          </div>
+        </div>
+        <div class="container-fluid small-font">
+          <div class="row">
+            <div class="col big-top-margin">
+              <ul class="list-group">
+                <li class="list-group-item">Le <strong>Job</strong> est lancé par le <strong>JobLauncher</strong></li>
+                <li class="list-group-item">Les <strong>Jobs</strong> sont stockés dans le <strong>JobRepository</strong></li>
+                <li class="list-group-item">Lorsqu'un <strong>Job</strong> est lancé, une nouvelle <strong>JobInstance</strong> est créée pour chaque ensemble unique de <strong>JobParameters</strong></li>
+                <li class="list-group-item">Chaque <strong>JobInstance</strong> possède au moins une <strong>JobExecution</strong> correspondante, et potentiellement plusieurs en cas de redémarrage du <strong>Job</strong></li>
+                <li class="list-group-item">Chaque <strong>JobExecution</strong> possède un statut, éventuellement un code de sortie et un message de sortie</li>
+              </ul>
+            </div>
+            <div class="col text-left">
+              <pre><code class="java">@Configuration
+@EnableBatchProcessing
+public class HelloWorldBatch {
+
+    @Autowired
+    public JobBuilderFactory jobBuilderFactory;
+
+    @Bean
+    public Job helloWorldBatch(Step hwStep, Step importFileStep) {
+        return jobBuilderFactory.get("helloWorldBatch")
+                .incrementer(new RunIdIncrementer())
+                .flow(hwStep)
+                .next(importFileStep)
+                .end()
+                .build();
+    }
+
+    // Définition des steps...
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Par défaut avec Spring Boot, il suffit de lancer l'application pour lancer le batch.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-step" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Step</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Un <strong>Job</strong> est composée de une ou plusieurs <strong>Steps</strong> qui peuvent être orchestrée selon un flot d'exécution séquentiel ou plus complexe.
+          </div>
+        </div>
+        <div class="container-fluid small-font">
+          <div class="row">
+            <div class="col big-top-margin">
+              <ul class="list-group">
+                <li class="list-group-item">Une <strong>Step</strong> peut représenter l'exécusion d'une <strong>Tasklet</strong></li>
+                <li class="list-group-item">Une <strong>Step</strong> peut aussi être composée d'un <strong>ItemReader</strong>, éventuellement d'un <strong>ItemProcessor</strong>
+                  et d'un <strong>ItemWriter</strong></li>
+                <li class="list-group-item">Lorsqu'une <strong>Step</strong> est lancée, une nouvelle <strong>StepExecution</strong> est créée</li>
+                <li class="list-group-item">Chaque <strong>StepExecution</strong> possède un statut, éventuellement un code de sortie et un message de sortie</li>
+              </ul>
+            </div>
+            <div class="col text-left">
+              <pre><code class="java">@Configuration
+@EnableBatchProcessing
+public class HelloWorldBatch {
+    //Définitions précédentes...
+    @Bean
+    public Step hwStep() {
+        return stepBuilderFactory.get("hwStep").tasklet(myTasklet()).build();
+    }
+
+    @Bean
+    public Step importFileStep(ItemWriter&lt;MyObject&gt; writer) {
+        return stepBuilderFactory.get("importFile")
+                .&lt;MyObject, MyObject&gt; chunk(CHUNK_SIZE)
+                .reader(reader(null))
+                .processor(processor())
+                .writer(writer)
+                .build();
+    }
+    // Définition des reader/processor/writer...
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-datamodel" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Données d'exécution</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les données d'exécution des batchs (nom, date, paramètres, avancement...) sont stockées
+            en base de données.
+          </div>
+        </div>
+        <div class="container">
+          <img src="img/meta-data-erd.png" alt="">
+        </div>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est possible de faire générer automatiquement les tables nécessaires à Spring Batch
+            avec la clé <code>spring.batch.initialize-schema</code> dans le fichier <code>application.properties</code> ou directement lors du lancement de l'application.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-reader" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Reader</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+        <div class="container little-top-margin">
+
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-writer" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Writer</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+        <div class="container little-top-margin">
+
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-processor" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Processor</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+        <div class="container little-top-margin">
+
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-tasklet" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Tasklet</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+        <div class="container little-top-margin">
+
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-listener" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Listener</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+        <div class="container little-top-margin">
+
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-flow" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Flot d'exécution</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+        <div class="container little-top-margin">
+
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-errors" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Gestion des erreurs</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+        <div class="container little-top-margin">
+
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-optimize" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Optimisations</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+        <div class="container little-top-margin">
+
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+<script src="js/impress.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/mark.min.js"></script>
+<script src="js/script.js"></script>
+<script src="js/search.js"></script>
+
