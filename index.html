@@ -950,7 +950,7 @@ public class HelloWorldBatch {
         </div>
         <div class="container-fluid little-top-margin">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le flot d'exécution des <strong>Steps</strong> peut être modifié en fonction des codes retour des Steps.
           </div>
         </div>
       </div>
@@ -980,64 +980,267 @@ public class HelloWorldBatch {
     </div>
   </div>
 
-  <div id="springbatch-reader" class="step slide">
+  <div id="springbatch-chunk" class="step slide">
     <div class="jumbotron jumbotron-fluid">
       <div class="container-fluid text-center">
-        <h1 class="display-3">Reader</h1>
+        <h1 class="display-3"><strong>Step</strong> orientée <strong>Chunk</strong></h1>
         <div class="container-fluid">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>Steps</strong> orientées <strong>Chunk</strong> permettent le traitement de données par lot. Les données sont lues par un <strong>ItemReader</strong>, éventuellement transformées
+            par un <strong>ItemProcessor</strong> avant d'être écrites par un <strong>ItemWriter</strong>.
           </div>
         </div>
-        <div class="container little-top-margin">
-
+        <div class="container big-top-margin text-center">
+          <img src="img/chunk-oriented-processing.png" alt="" height="400">
         </div>
-        <div class="container-fluid little-top-margin">
+        <div class="container-fluid big-top-margin">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;La taille du lot en écriture et en lecture est paramétrable afin de coller aux besoins techniques et fonctionnels et optimiser les performances du batch.
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="springbatch-writer" class="step slide">
+  <div id="springbatch-chunk-item" class="step slide">
     <div class="jumbotron jumbotron-fluid">
       <div class="container-fluid text-center">
-        <h1 class="display-3">Writer</h1>
+        <h1 class="display-3">Reader (1/2)</h1>
         <div class="container-fluid">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>ItemReader</strong> sont les éléments permettant la lecture par lot de données issues de sources diverses (fichiers plats, XML, bases de données...).
           </div>
         </div>
-        <div class="container little-top-margin">
-
+        <div class="container-fluid little-top-margin">
+          <div class="row">
+            <div class="col-6 text-left small-font">
+              <pre><code class="java">//Interface ItemReader fournie par Spring Batch
+public interface ItemReader&lt;T&gt; {
+  T read() throws Exception, UnexpectedInputException, ParseException;
+}
+//DTO Véhicule
+public class Vehicule {
+  private String immat;
+  private String marque;
+  private String modele;
+  private Integer km;
+  //Getters/Setters
+}</code></pre>Fichier test.csv <br>
+              <code>immat;marque;modele;kilometrage <br>
+AB-123-CD;Peugeot;208;7462<br>
+EL-645-AA;Renault;Zoé;4621<br>
+DE-679-KK;Citroën;C4;39651<br>
+              </code>
+            </div>
+            <div class="col-6 small-font text-left">
+              <pre><code class="java">@Bean
+public FlatFileItemReader&lt;Vehicule&gt; myCSVReader() {
+  return new FlatFileItemReaderBuilder&lt;Vehicule&gt;()
+    .name("myCSVReader").linesToSkip(1)
+    .resource(new ClassPathResource("test.csv"))
+    .delimited().delimiter(";")
+    .names("immat", "marque", "modele", "km")
+    .fieldSetMapper(new BeanWrapperFieldSetMapper<>() {{
+        setTargetType(Vehicule.class);
+    }})
+    .build();
+}
+</code></pre>
+            </div>
+          </div>
         </div>
         <div class="container-fluid little-top-margin">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;La liste des <strong>ItemReader</strong> fournis par Spring Batch est accessible
+            <a href="https://docs.spring.io/spring-batch/trunk_bkp/reference/html/listOfReadersAndWriters.html" target="_blank">ici</a>. On peut également développer ses propres
+            <strong>ItemReader</strong> en implémentant l'interface <strong>ItemReader</strong>.
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="springbatch-processor" class="step slide">
+  <div id="springbatch-chunk-item-reader" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Reader (2/2)</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Exemple de configuration d'un <strong>ItemReader</strong> lisant des données à partir de la base de données
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="row">
+            <div class="col-6 text-left small-font">
+              <pre><code class="java">@Entity
+public class Vehicule {
+  @Column(name = "immatriculation")
+  private String immat;
+  private String marque;
+  private String modele;
+  @Column(name = "kilometrage")
+  private Integer km;
+  //Getters/Setters
+}</code></pre>
+            </div>
+            <div class="col-6 small-font text-left">
+              <pre><code class="java">@Autowired
+public EntityManagerFactory entityManagerFactory;
+
+@Bean
+public JpaPagingItemReader&lt;Vehicule&gt; myJpaReader() {
+    return new JpaPagingItemReaderBuilder&lt;Vehicule&gt;()
+            .name("myJpaReader")
+            .entityManagerFactory(entityManagerFactory)
+            .pageSize(10)
+            .queryString("from Vehicule v where km = 0")
+            .build();
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Chaque élément lu par l'<strong>ItemReader</strong> est envoyé à l'<strong>ItemProcessor</strong> configuré au
+            niveau de la step, ou à défaut, l'<strong>ItemWriter</strong>. Le type de sortie de l'<strong>ItemReader</strong> doit être compatible avec le type d'entrée
+            de l'<strong>ItemProcessor</strong> (ou de l'<strong>ItemWriter</strong>).
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-chunk-item-processor" class="step slide">
     <div class="jumbotron jumbotron-fluid">
       <div class="container-fluid text-center">
         <h1 class="display-3">Processor</h1>
         <div class="container-fluid">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Souvent les données lues doivent être transformées afin de correspondre
+            au format des données à écrire. L'<strong>ItemProcessor</strong> est là pour ça. C'est une interface prenant deux types en paramètres,
+            le premier correspond à la classe d'entrée (la même que l'<strong>ItemReader</strong>), le second au format de sortie (la même que l'<strong>ItemWriter</strong>).
           </div>
         </div>
-        <div class="container little-top-margin">
-
+        <div class="container-fluid little-top-margin text-left small-font">
+          <div class="row">
+            <div class="col-6">
+              <pre><code class="java">//Interface ItemProcessor fournie par Spring Batch
+public interface ItemProcessor&lt;I, O&gt; {
+  O process(I item) throws Exception;
+}</code></pre>
+            </div>
+            <div class="col-6">
+              <pre><code class="java">class VehiculeProcessor implements ItemProcessor&lt;Vehicule, Vehicule&gt; {
+  @Override
+  Vehicule process(Vehicule item) throws Exception {
+    if(item.getModele() == null){
+      //Retourner null permet de filtrer le résultat
+      et de ne pas l'envoyer à l'ItemWriter
+      return null;
+    }
+    item.setMarque(item.getMarque() != null ?
+        item.getMarque().toUpperCase() : "N/A";
+    item.setDenomination(item.getMarque() + " " + item.getModele());
+    return item;
+  }
+}</code></pre>
+            </div>
+          </div>
         </div>
         <div class="container-fluid little-top-margin">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Dans cet exemple, les classes d'entrée et de sortie sont les mêmes, mais il est bien évidemment possible
+            de définir deux classes différentes. Il faudra alors construire une instance de la classe de sortie à partir de l'instance de la classe d'entrée.
           </div>
+          <div class="alert alert-warning small-font" role="alert">
+            <i class="fa fa-icon fa-exclamation-triangle"></i>&nbsp;Ce traitement étant unitaire, attention à ne pas faire d'opérations coûteuses dans la méthode <code>process</code> (comme des requêtes BDD par exemple).
+            Préférer dans ce cas des opérations ensemblistes (cf. Tasklet).
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="springbatch-chunk-item-writer" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Writer (1/2)</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Dernier élément de la <strong>Step</strong> orientée <strong>Chunk</strong>, l'<strong>ItemWriter</strong> permet d'écrire par lot les
+            données envoyées depuis l'<strong>ItemReader</strong> (éventuellement via l'<strong>ItemProcessor</strong>).
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="row">
+            <div class="col-6 text-left small-font">
+              <pre><code class="java">//Interface ItemWriter fournie par Spring Batch
+public interface ItemWriter&lt;T&gt; {
+  void write(List&lt;? extends T&gt; items) throws Exception;
+}</code></pre>
+            </div>
+            <div class="col-6 small-font text-left">
+              <pre><code class="java">@Bean
+public JpaItemWriter&lt;Commune&gt; writerJPA(){
+  return new JpaItemWriterBuilder<Vehicule>().
+    entityManagerFactory(entityManagerFactory).build();
+}
+
+@Bean
+  public JdbcBatchItemWriter<Vehicule> writerJDBC(DataSource dataSource){
+    return new JdbcBatchItemWriterBuilder&lt;Vehicule&gt;()
+      .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider&lt;&gt;())
+      .sql("INSERT INTO vehicule (immatriculation, marque, modele, kilometrage) "
+            + "VALUES (:immat, :marque, :modele, :km)")
+      .dataSource(dataSource)
+      .build();
+  }
+</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-primary small-font" role="alert">
+          <i class="fa fa-icon fa-info-circle"></i>&nbsp;La liste des <strong>ItemWriter</strong> fournis par Spring Batch est accessible
+          <a href="https://docs.spring.io/spring-batch/trunk_bkp/reference/html/listOfReadersAndWriters.html" target="_blank">ici</a>. On peut également développer ses propres
+          <strong>ItemWriter</strong> en implémentant l'interface <strong>ItemWriter</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-chunk-item-writer2" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Writer (2/2)</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voyons une configuration d'<strong>ItemWriter</strong> de fichier.
+          </div>
+        </div>
+        <div class="container little-top-margin">
+          <div class="row">
+            <div class="col small-font text-left">
+              <pre><code class="java">@Bean
+public ItemWriter&lt;Vehicule&gt; fileWriter() {
+  BeanWrapperFieldExtractor&lt;Vehicule&gt; bwfe = new BeanWrapperFieldExtractor&lt;Vehicule&gt;();
+  bwfe.setNames(new String[] {"immat", "marque", "modele", "km"});
+
+  DelimitedLineAggregator&lt;Vehicule&gt; agg = new DelimitedLineAggregator&lt;&gt;();
+  agg.setFieldExtractor(bwfe);
+
+  return new FlatFileItemWriterBuilder&lt;&gt;()
+    .name("csvWriter")
+    .lineAggregator(agg)
+    .resource(new FileSystemResource("test.csv"))
+    .delimited().delimiter(";")
+    .build();
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-primary small-font" role="alert">
+          <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est également possible de créer son propre <strong>ItemWriter</strong> en implément l'interface <strong>ItemWriter</strong>.
         </div>
       </div>
     </div>
