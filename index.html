@@ -628,33 +628,31 @@ humancoders.message=Hello</code></pre>
         <div class="container-fluid small-font">
           <div class="row text-left">
             <div class="col-8">
-                            <pre><code class="xml">
-&lt;beans&gt;
-&lt;bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"&gt;
+                            <pre><code class="xml">&lt;beans&gt;
+  &lt;bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"&gt;
     &lt;property name="locations" value="classpath:app.properties"/&gt;
-&lt;/bean&gt;
-&lt;!-- OU --&gt;
-&lt;context:property-placeholder location="classpath:app.properties"/&gt;
+  &lt;/bean&gt;
+  &lt;!-- OU --&gt;
+  &lt;context:property-placeholder location="classpath:app.properties"/&gt;
 
-&lt;bean id="beanExemple" class="com.humancoders.BeanExemple"&gt;
+  &lt;bean id="beanExemple" class="com.humancoders.BeanExemple"&gt;
     &lt;property name="nom" value="${humancoders.nom}"/&gt;
     &lt;property name="message" value="${humancoders.message}"/&gt;
-&lt;/bean&gt;
+  &lt;/bean&gt;
 &lt;/beans&gt;</code></pre>
             </div>
             <div class="col-4 pr-0" style="margin-left: -45px; margin-right: 0;">
                             <pre><code class="java">@Configuration
 @PropertySource("classpath:app.properties")
 public class SpringConfig {
-    @Value("${humancoders.nom}")
-    private String nom;
-    @Value("${humancoders.message}")
-    private String message;
-    @Bean(name = "beanExemple")
-    public BeanExemple beanExemple(){
-        return new
-          BeanExemple(message, nom);
-    }
+  @Value("${humancoders.nom}")
+  private String nom;
+  @Value("${humancoders.message}")
+  private String message;
+  @Bean(name = "beanExemple")
+  public BeanExemple beanExemple(){
+    return new BeanExemple(message, nom);
+  }
 }</code></pre>
             </div>
           </div>
@@ -1123,23 +1121,21 @@ public JpaPagingItemReader&lt;Vehicule&gt; myJpaReader() {
         </div>
         <div class="container-fluid little-top-margin text-left small-font">
           <div class="row">
-            <div class="col-6">
-              <pre><code class="java">//Interface ItemProcessor fournie par Spring Batch
+            <div class="col-">
+              <pre><code class="java">//Interface ItemProcessor de Spring Batch
 public interface ItemProcessor&lt;I, O&gt; {
   O process(I item) throws Exception;
 }</code></pre>
             </div>
-            <div class="col-6">
+            <div class="col-8">
               <pre><code class="java">class VehiculeProcessor implements ItemProcessor&lt;Vehicule, Vehicule&gt; {
   @Override
   Vehicule process(Vehicule item) throws Exception {
     if(item.getModele() == null){
-      //Retourner null permet de filtrer le résultat
-      et de ne pas l'envoyer à l'ItemWriter
+      //Retourner null permet de filtrer le résultat et de ne pas l'envoyer à l'ItemWriter
       return null;
     }
-    item.setMarque(item.getMarque() != null ?
-        item.getMarque().toUpperCase() : "N/A";
+    item.setMarque(item.getMarque() != null ? item.getMarque().toUpperCase() : "N/A";
     item.setDenomination(item.getMarque() + " " + item.getModele());
     return item;
   }
@@ -1147,7 +1143,7 @@ public interface ItemProcessor&lt;I, O&gt; {
             </div>
           </div>
         </div>
-        <div class="container-fluid little-top-margin">
+        <div class="container-fluid">
           <div class="alert alert-primary small-font" role="alert">
             <i class="fa fa-icon fa-info-circle"></i>&nbsp;Dans cet exemple, les classes d'entrée et de sortie sont les mêmes, mais il est bien évidemment possible
             de définir deux classes différentes. Il faudra alors construire une instance de la classe de sortie à partir de l'instance de la classe d'entrée.
@@ -1174,21 +1170,24 @@ public interface ItemProcessor&lt;I, O&gt; {
         </div>
         <div class="container-fluid little-top-margin">
           <div class="row">
-            <div class="col-6 text-left small-font">
-              <pre><code class="java">//Interface ItemWriter fournie par Spring Batch
+            <div class="col-4 text-left small-font">
+              <pre><code class="java">//Interface ItemWriter de Spring Batch
 public interface ItemWriter&lt;T&gt; {
-  void write(List&lt;? extends T&gt; items) throws Exception;
+  void write(List&lt;? extends T&gt; items)
+                throws Exception;
 }</code></pre>
             </div>
-            <div class="col-6 small-font text-left">
-              <pre><code class="java">@Bean
+            <div class="col-8 small-font text-left">
+              <pre><code class="java">@Autowired
+public EntityManagerFactory entityManagerFactory;
+
+@Bean
 public JpaItemWriter&lt;Commune&gt; writerJPA(){
-  return new JpaItemWriterBuilder<Vehicule>().
-    entityManagerFactory(entityManagerFactory).build();
+  return new JpaItemWriterBuilder&lt;Vehicule&gt;().entityManagerFactory(entityManagerFactory).build();
 }
 
 @Bean
-  public JdbcBatchItemWriter<Vehicule> writerJDBC(DataSource dataSource){
+  public JdbcBatchItemWriter&lt;Vehicule&gt; writerJDBC(DataSource dataSource){
     return new JdbcBatchItemWriterBuilder&lt;Vehicule&gt;()
       .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider&lt;&gt;())
       .sql("INSERT INTO vehicule (immatriculation, marque, modele, kilometrage) "
@@ -1252,15 +1251,48 @@ public ItemWriter&lt;Vehicule&gt; fileWriter() {
         <h1 class="display-3">Tasklet</h1>
         <div class="container-fluid">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>Tasklets</strong> permettent de réaliser tous types de traitements
+            unitaires (exécution de requêtes SQL par exemple)
           </div>
         </div>
-        <div class="container little-top-margin">
-
+        <div class="container-fluid little-top-margin-margin small-font">
+          <div class="row">
+            <div class="col-5 text-left big-top-margin">
+              <pre><code class="java">//Interface Tasklet fournie par Spring Batch
+public interface Tasklet {
+  RepeatStatus execute(StepContribution contribution,
+        ChunkContext chunkContext) throws Exception;
+}</code></pre>
+              <p class="big-top-margin">Une <strong>Tasklet</strong> contient une seule méthode <code>execute</code> qui sera répétée tant que la méthode
+                ne renvoie pas <code>RepeatStatus.FINISHED</code>. Il est en effet possible de renvoyer <code>RepeatStatus.CONTINUABLE</code>
+                afin d'exécuter de nouveau la <strong>Tasklet</strong></p>
+            </div>
+            <div class="col-7 text-left">
+              <pre><code class="java">public class PurgeVehiculeTasklet implements Tasklet {
+  @Autowired
+  private VehiculeRepository vehiculeRepository;
+  @Override
+  public RepeatStatus execute(StepContribution contribution,
+                ChunkContext chunkContext) throws Exception {
+    vehiculeRepository.deleteByImmatNull();
+    return RepeatStatus.FINISHED;
+  }
+}</code></pre>
+              <pre><code class="java">@Bean
+public Tasklet stepVehicule(){
+  return new PurgeVehiculeTasklet();
+}
+@Bean
+public Step stepVehicule(Tasklet stepVehicule) {
+  return stepBuilderFactory.get("stepVehicule").tasklet(stepVehicule).build();
+}</code></pre>
+            </div>
+          </div>
         </div>
         <div class="container-fluid little-top-margin">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Ce principe permet d'intégrer dans un batch des éléments qui ne fonctionnent
+            pas selon le principe de <strong>Chunk</strong>.
           </div>
         </div>
       </div>
@@ -1273,15 +1305,275 @@ public ItemWriter&lt;Vehicule&gt; fileWriter() {
         <h1 class="display-3">Listener</h1>
         <div class="container-fluid">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>Listener</strong> sont des éléments de Spring Batch
+            permettant d'exécuter des instructions à des moments clés du batch</em>. Voici les différents types de <strong>Listener</strong>
           </div>
         </div>
-        <div class="container little-top-margin">
-
+        <div class="container-fluid big-top-margin small-font text-left">
+          <div class="row">
+            <div class="col-4">
+              <ul class="list-group">
+                <li class="list-group-item"><code>StepExecutionListener</code></li>
+                <li class="list-group-item"><code>ChunkListener</code></li>
+                <li class="list-group-item"><code>ItemReadListener</code></li>
+                <li class="list-group-item"><code>ItemProcessListener</code></li>
+                <li class="list-group-item"><code>ItemWriteListener</code></li>
+                <li class="list-group-item"><code>SkipListener</code></li>
+              </ul>
+            </div>
+            <div class="col-8">
+              <ul class="list-group">
+                <li class="list-group-item">Intervenir avant ou après l'exécution d'une <strong>Step</strong></li>
+                <li class="list-group-item">Intervenir avant ou après chaque <strong>Chunk</strong></li>
+                <li class="list-group-item">Intervenir avant ou après une <strong>lecture</strong>, on lors d'une erreur de <strong>lecture</strong></li>
+                <li class="list-group-item">Intervenir avant ou après un <strong>traitement</strong>, on lors d'une erreur de <strong>traitement</strong></li>
+                <li class="list-group-item">Intervenir avant ou après une <strong>écriture</strong>, on lors d'une erreur d'<strong>écriture</strong></li>
+                <li class="list-group-item">Intervenir lorsqu'un élément a été <strong>ignoré</strong></li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="container-fluid little-top-margin">
+        <div class="container-fluid big-top-margin">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voyons comment déclarer et utiliser ces <strong>Listener</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-listener-detail" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3"><code>StepExecutionListener</code></h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le <strong>StepExecutionListener</strong> définit une méthode <code>beforeStep</code> et <code>afterStep</code>
+            permettant l'exécution d'instructions avant le lancement de la <strong>Step</strong>, ou une fois cette dernière terminée.
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin small-font text-left">
+          <div class="row">
+            <div class="col-6">
+              <pre><code class="java">//Interface fournie par Spring Batch
+public interface StepExecutionListener extends StepListener {
+    void beforeStep(StepExecution stepExecution);
+    ExitStatus afterStep(StepExecution stepExecution);
+}</code></pre>
+              <pre><code class="java">public class VehiculeStepListiner implements StepExecutionListener {
+  @Override
+  public void beforeStep(StepExecution sExec) throws Exception {
+    //Avant l'exécution de la Step
+  }
+
+  @Override
+  public ExitStatus afterStep(StepExecution sExec) throws Exception {
+    //Une fois la Step exécutée
+  }
+}</code></pre>
+            </div>
+            <div class="col-6">
+              <p>Il est aussi possible d'utiliser le annotations <code>@BeforeStep</code> et <code>@AfterStep</code> sur des méthodes implémentées dans un Reader/Processor/Writer ou une Tasklet</p>
+              <pre><code class="java">public class VehiculeTasklet implements Tasklet {
+  @BeforeStep
+  public void beforeStep(StepExecution sExec) throws Exception {
+    //Avant l'exécution de la Step
+  }
+
+  @AfterStep
+  public ExitStatus afterStep(StepExecution sExec) throws Exception {
+    //Une fois la Step exécutée
+  }
+}
+</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid ">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Ce type de <strong>Listener</strong> est utile pour récupérer des éléments
+            qui seront utilisés dans la <strong>Step</strong> ou pour journaliser le compte-rendu d'exécution de la <strong>Step</strong>.
+            <br>
+            A noter qu'il est possible de modifier l'<code>ExitStatus</code> dans la
+            méthode <code>afterStep</code> afin de modifier le flot d'exécution de la <strong>Step</strong>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-listener-detail-chunk" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3"><code>ChunkListener</code></h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le <strong>ChunkListener</strong> définit une méthode <code>beforeChunk</code> et <code>afterChunk</code>
+            permettant l'exécution d'instructions avant le traitement d'un <strong>Chunk</strong>, ou une fois cedernier dernière terminé (possible donc au niveau d'un <strong>ItemReader</strong>
+            ou d'un <strong>ItemWriter</strong>).
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin small-font text-left">
+          <div class="row">
+            <div class="col-6">
+              <pre><code class="java">//Interface fournie par Spring Batch
+public interface ChunkListener extends StepListener {
+    void beforeChunk();
+    void afterChunk();
+}</code></pre>
+              <pre><code class="java">public class VehiculeChunkListener implements ChunkListener {
+  @Override
+  public void beforeChunk() throws Exception {
+    //Avant l'exécution du Chunk
+  }
+
+  @Override
+  public void afterChunk() throws Exception {
+    //Une fois le chunk terminé
+  }
+}</code></pre>
+            </div>
+            <div class="col-6">
+              <p>Il est aussi possible d'utiliser le annotations <code>@BeforeChunk</code> et <code>@AfterChunk</code> sur des méthodes implémentées dans un Reader/Writer.</p>
+              <pre><code class="java">public class VehiculeItemReader implements ItemReader&lt;Vehicule&gt; {
+  Vehicule read() {...}
+
+  @BeforeChunk
+  public void beforeChunk() throws Exception {
+    //Avant l'exécution du chunk
+  }
+
+  @AfterStep
+  public void afterChunk() throws Exception {
+    //Une fois le chunk terminé
+  }
+}
+</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid ">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Ce type de <strong>Listener</strong> est notamment utile pour journaliser l'avancement du <strong>Batch</strong>.
+            <br>
+            A noter que la méthode <code>afterChunk</code> n'est pas appelée lorsqu'une erreur est levée pendant le traitement du <strong>Chunk</strong>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-listener-detail-readprocesswrite" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3"><code>Item*Listener</code></h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>Item*Listener</strong> définissent les méthodes <code>before*</code>, <code>after*</code> et <code>on*Error</code> avec <code>*</code>
+            = <code>Read</code>, <code>Write</code>, ou <code>Process</code>.
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin small-font text-left">
+          <div class="row">
+            <div class="col-6">
+              <pre><code class="java">//Interfaces fournies par Spring Batch
+public interface ItemReadListener&lt;T&gt; extends StepListener {
+    void beforeRead();
+    void afterRead(T item);
+    void onReadError(Exception ex);
+}
+public interface ItemProcessListener&lt;T, S&gt; extends StepListener {
+    void beforeProcess(T item);
+    void afterProcess(T item, S result);
+    void onProcessError(T item, Exception ex);
+}
+public interface ItemWriteListener&lt;T&gt; extends StepListener {
+    void beforeWrite(List&lt;? extends S&gt; items);
+    void afterWrite(List&lt;? extends S&gt; items);
+    void onWriteError(Exception ex, List&lt;? extends S&gt; items);
+}</code></pre>
+            </div>
+            <div class="col-6">
+              <p>Il est aussi possible d'utiliser le annotations <code>@Before*</code>, <code>@After*</code>, <code>@OnRead*</code> sur des méthodes implémentées dans un Reader/Processor/Writer.</p>
+              <pre><code class="java">public class VIP implements ItemProcessor&lt;Vehicule, Vehicule&gt; {
+  Vehicule process(Vehicule v) {...}
+  @BeforeProcess
+  public void beforeProcess(Vehicule item) throws Exception {
+    //Avant le traitement de l'élément
+  }
+  @AfterProcess
+  public void afterProcess(Vehicule v, Vehicule r) throws Exception {
+    //Une fois l'élément traité
+  }
+  @AfterProcess
+  public void onProcessError(Exception ex) throws Exception {
+    //Lors d'une exception levée lors du traitement
+  }
+}
+</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid ">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le fonctionnement est le même pour les <code>ItemWriteListener</code> et <code>ItemReadListener</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-listener-detail-skip" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3"><code>SkipListener</code></h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le <strong>SkipListener</strong> définit les méthodes <code>onSkipInRead</code>, <code>onSkipInProcess</code>, <code>onSkipInWrite</code>
+            permettant de traiter les éléments ignorés dans le batch
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin small-font text-left">
+          <div class="row">
+            <div class="col-6">
+              <pre><code class="java">//Interfaces fournies par Spring Batch
+public interface SkipListener&lt;T, S&gt; extends StepListener {
+    void onSkipInRead(Throwable ex);
+    void onSkipInProcess(T item, Throwable ex);
+    void onSkipInWrite(S item, Throwable ex);
+}</code></pre>
+              <pre><code class="java">public class VSL implements SkipListener&lt;Vehicule, Vehicule&gt; {
+    @Override
+    public void onSkipInRead(Throwable ex) {
+    }
+    @Override
+    public void onSkipInProcess(Vehicule v, Throwable ex) {
+    }
+    @Override
+    public void onSkipInWrite(Vehicule v, Throwable ex) {
+    }
+}</code></pre>
+            </div>
+            <div class="col-6">
+              <p>Il est aussi possible d'utiliser le annotations <code>@OnSkipInRead</code>, <code>@OnSkipInProcess</code>, <code>@OnSkipInWrite</code> sur des méthodes implémentées dans un Reader/Processor/Writer.</p>
+              <pre><code class="java">public class VIP implements ItemProcessor&lt;Vehicule, Vehicule&gt; {
+  Vehicule process(Vehicule v) {...}
+
+  @OnSkipInProcess
+  public void onSkipInProcess(Vehicule v, Throwable ex) {
+    //Si une exception configurée pour ignorer l'élément
+    //est levée, cette méthode est exécutée avec en paramètre
+    //l'élément qui a posé problème et l'exception qui a été levée.
+  }
+}
+</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid ">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est nécessaire pour cela de définir dans la configuration du batch quelles sont les classes d'exception qui vont permettre
+            d'ignorer des éléments.
           </div>
         </div>
       </div>
@@ -1291,18 +1583,77 @@ public ItemWriter&lt;Vehicule&gt; fileWriter() {
   <div id="springbatch-flow" class="step slide">
     <div class="jumbotron jumbotron-fluid">
       <div class="container-fluid text-center">
-        <h1 class="display-3">Flot d'exécution</h1>
+        <h1 class="display-3">Flot d'exécution séquentiel</h1>
         <div class="container-fluid">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>Steps</strong> peuvent être enchaînées de diverses manières. La plus simple consistant en un enchaînement séquentiel
+            des <strong>Steps</strong>.
           </div>
         </div>
-        <div class="container little-top-margin">
-
+        <div class="container-fluid little-top-margin small-font">
+          <div class="row">
+            <div class="col-6">
+              <img src="img/sequential-flow.png" alt="">
+            </div>
+            <div class="col-6 text-left">
+              <pre><code class="java"> @Autowired
+public JobBuilderFactory jobBuilderFactory;
+//Avec stepA, stepB et stepC trois Steps déclarées en @Bean
+@Bean
+public Job myJob(Step stepA, Step stepB, Step stepC) {
+  return jobBuilderFactory.get("myJob")
+    .incrementer(new RunIdIncrementer())
+    .flow(stepA).next(stepB).next(stepC)
+    .end().build();
+}</code></pre>
+            </div>
+          </div>
         </div>
         <div class="container-fluid little-top-margin">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Dans cet exemple, la <strong>Step</strong> <code>stepPurge</code> sera exécutée que si la <strong>Step</strong> <code>stepImportCSV</code>
+            s'exécute correctement (c'est-à-dire que l'<code>ExitStatus</code> est <code>COMPLETED</code>).
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-flow2" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Flot d'exécution conditionnel</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>Steps</strong> peuvent aussi être exécutées de manière conditionnelle. Ainsi en fonction de l'<code>ExitStatus</code> d'une <strong>Step</strong>
+            , on peut décider d'exécuter telle ou telle <strong>Step</strong>.
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin small-font">
+          <div class="row">
+            <div class="col-6">
+              <img src="img/conditional-flow.png" alt="">
+            </div>
+            <div class="col-6 text-left">
+              <pre><code class="java"> @Autowired
+public JobBuilderFactory jobBuilderFactory;
+//Avec stepA, stepB et stepC trois steps déclarées à @Bean
+@Bean
+public Job myJob(Step stepA, Step stepB, Step stepC) {
+  return jobBuilderFactory.get("myJob")
+    .incrementer(new RunIdIncrementer())
+    .start(stepA).on("COMPLETED").to(stepB)
+    .from(stepA).on("WARNING").to(stepC)
+    .end().build();
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Dans cet exemple, la <strong>Step</strong> <code>stepB</code> sera exécutée que si la <strong>Step</strong> <code>stepA</code>
+            s'exécute correctement (c'est-à-dire que l'<code>ExitStatus</code> est <code>COMPLETED</code>). Si l'<code>ExitStatus</code> de la <strong>Step</strong> <code>stepA</code>
+            est <code>WARNING</code>, c'est la <strong>Step</strong> <code>stepC</code> qui sera exécutée.
           </div>
         </div>
       </div>
