@@ -1583,11 +1583,34 @@ public interface SkipListener&lt;T, S&gt; extends StepListener {
   <div id="springbatch-flow" class="step slide">
     <div class="jumbotron jumbotron-fluid">
       <div class="container-fluid text-center">
+        <h1 class="display-3">Flot d'exécution</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>Steps</strong> peuvent être enchaînées de diverses manières.
+          </div>
+        </div>
+        <div class="container-fluid big-top-margin ">
+          <ul class="list-group">
+            <li class="list-group-item">Flot d'exécution séquentiel</li>
+            <li class="list-group-item">Flot d'exécution conditionnel</li>
+            <li class="list-group-item">Flot d'exécution parallèle</li>
+          </ul>
+        </div>
+        <div class="container-fluid big-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voyons comment en quoi consistent ces flots d'exécution et comment on les paramètre
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div id="springbatch-flow-seq" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
         <h1 class="display-3">Flot d'exécution séquentiel</h1>
         <div class="container-fluid">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>Steps</strong> peuvent être enchaînées de diverses manières. La plus simple consistant en un enchaînement séquentiel
-            des <strong>Steps</strong>.
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le plus simple moyen d'ordonnancer les <strong>Steps</strong> à les enchaîner de manière séquentielle.
           </div>
         </div>
         <div class="container-fluid little-top-margin small-font">
@@ -1611,15 +1634,15 @@ public Job myJob(Step stepA, Step stepB, Step stepC) {
         </div>
         <div class="container-fluid little-top-margin">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Dans cet exemple, la <strong>Step</strong> <code>stepPurge</code> sera exécutée que si la <strong>Step</strong> <code>stepImportCSV</code>
-            s'exécute correctement (c'est-à-dire que l'<code>ExitStatus</code> est <code>COMPLETED</code>).
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Dans cet exemple, la <strong>Step</strong> <code>stepB</code> sera exécutée que si la <strong>Step</strong> <code>stepA</code>
+            s'exécute correctement (c'est-à-dire que l'<code>ExitStatus</code> est <code>COMPLETED</code>). Idem pour la <strong>Step</strong> <code>stepC</code> avec la <strong>Step</strong> <code>stepB</code>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="springbatch-flow2" class="step slide">
+  <div id="springbatch-flow-seq-cond" class="step slide">
     <div class="jumbotron jumbotron-fluid">
       <div class="container-fluid text-center">
         <h1 class="display-3">Flot d'exécution conditionnel</h1>
@@ -1637,7 +1660,7 @@ public Job myJob(Step stepA, Step stepB, Step stepC) {
             <div class="col-6 text-left">
               <pre><code class="java"> @Autowired
 public JobBuilderFactory jobBuilderFactory;
-//Avec stepA, stepB et stepC trois steps déclarées à @Bean
+//Avec stepA, stepB et stepC trois steps déclarées en @Bean
 @Bean
 public Job myJob(Step stepA, Step stepB, Step stepC) {
   return jobBuilderFactory.get("myJob")
@@ -1653,7 +1676,49 @@ public Job myJob(Step stepA, Step stepB, Step stepC) {
           <div class="alert alert-primary small-font" role="alert">
             <i class="fa fa-icon fa-info-circle"></i>&nbsp;Dans cet exemple, la <strong>Step</strong> <code>stepB</code> sera exécutée que si la <strong>Step</strong> <code>stepA</code>
             s'exécute correctement (c'est-à-dire que l'<code>ExitStatus</code> est <code>COMPLETED</code>). Si l'<code>ExitStatus</code> de la <strong>Step</strong> <code>stepA</code>
-            est <code>WARNING</code>, c'est la <strong>Step</strong> <code>stepC</code> qui sera exécutée.
+            est <code>WARNING</code>, c'est la <strong>Step</strong> <code>stepC</code> qui sera exécutée. C'est grâce aux <strong>Listeners</strong> qu'il est
+            possible de modifier l'<code>ExitStatus</code>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-flow-seq-split" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Flot d'exécution parallèle</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>Steps</strong> peuvent aussi être exécutées en parallèle.
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin small-font">
+          <div class="row">
+            <div class="col-4">
+              <img src="img/split-flow.png" alt="">
+            </div>
+            <div class="col-8 text-left">
+              <pre><code class="java"> @Autowired
+public JobBuilderFactory jobBuilderFactory;
+//Avec stepA, stepB, stepC et stepD quatre steps déclarées en @Bean
+@Bean
+public Job importUserJob(Step stepImportCSV, Step stepGetMissingCoordinates) {
+  SimpleFlow flow1 = new FlowBuilder&lt;SimpleFlow&gt;("flow1").start(stepB).build();
+  SimpleFlow flow2 = new FlowBuilder&lt;SimpleFlow&gt;("flow2").start(stepC).build();
+  return jobBuilderFactory.get("parallel_job").incrementer(new RunIdIncrementer())
+    .flow(stepA)
+    .split(new SimpleAsyncTaskExecutor("parallel_flow")).add(flow1,flow2)
+    .next(stepD).end()
+    .build();
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid little-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Dans cet exemple, les <strong>Steps</strong> <code>stepB</code> et <code>stepC</code> sont exécutées en parallèle. Il est
+            aussi possible de paralléliser les traitements à l'intérieur d'une même <strong>Step</strong> (on parle de <strong>Steps Multi-threaded</strong>).
           </div>
         </div>
       </div>
@@ -1666,15 +1731,107 @@ public Job myJob(Step stepA, Step stepB, Step stepC) {
         <h1 class="display-3">Gestion des erreurs</h1>
         <div class="container-fluid">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Nous avons vu qu'il était possible de modifier l'<code>ExitStatus</code> des <strong>Steps</strong> afin
+            de modifier le flot d'exécution de manière dynamique. Comment le <strong>Batch</strong> se comporte-t-il en cas d'erreur ? Par défaut toute exception non
+            gérée dans une <strong>Step</strong> entraîne un arrêt de la <strong>Step</strong> qui passe en statut <code>FAILED</code> tout comme le <strong>Batch</strong>.
           </div>
         </div>
-        <div class="container little-top-margin">
-
+        <div class="container-fluid little-top-margin small-font">
+          <div class="row">
+            <div class="col-6">
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-primary">Step <em>Chunk</em></li>
+                <li class="list-group-item">Lorsqu'une exception est levée dans l'<code>ItemReader</code>, l'<code>ItemProcessor</code> ou l'<code>ItemWriter</code>,
+                le <em>Chunk</em> qui était en cours de traitement est <em>rollbacké</em> (nombre défini au niveau de la configuration de la <strong>Step</strong>).</li>
+                <li class="list-group-item">Les <em>Chunks</em> précédemment traités restent
+                  inchangés (les éléments enregistrés en BDD ou écrits dans un fichier sont conservés).</li>
+                <li class="list-group-item">La <strong>Step</strong> est interrompue, passe en statut <code>FAILED</code> tout comme le <strong>Batch</strong>.</li>
+                <li class="list-group-item">Si le <strong>Batch</strong> est par la suite relancé, la <strong>Step</strong> reprendra au début du <em>Chunk</em> précédemment en erreur.</li>
+              </ul>
+            </div>
+            <div class="col-6">
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-primary">Step <em>Tasklet</em></li>
+                <li class="list-group-item">Lorsqu'une exception est levée dans une <code>Tasklet</code>, le traitement est interrompu de manière classique</li>
+                <li class="list-group-item">Aucun <em>rollback</em> n'est effectué (sauf mécanismes internes au niveau de la BDD)</li>
+                <li class="list-group-item">Si le <strong>Batch</strong> est par la suite relancé, la <strong>Step</strong> reprendra au début de la <strong>Tasklet</strong>, ce qui peut impliquer que
+                  des éléments déjà traités le soient de nouveau.</li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="container-fluid little-top-margin">
           <div class="alert alert-primary small-font" role="alert">
-            <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est cependant possible de définir des politiques de <em>Retry</em> ou de <em>Skip</em> afin de rendre
+            le <strong>Batch</strong> plus tolérant aux erreurs en respectivement réessayant le traitement d'un élément ou en l'ignorant simplement pour passer au suivant.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-errors-retry" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Réessayer le traitement d'un élément en erreur</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est possible de mettre en place une politique de <em>Retry</em> permettant
+            de réessayer la lecture, le traitement ou l'écriture d'un élement (mode Chunk) ou encore d'une <strong>Tasklet</strong>. Cela peut éviter
+            le plantage du batch pour une indisponibilité temporaire d'une ressource (BDD ou réseau par exemple).
+          </div>
+        </div>
+        <div class="container big-top-margin small-font text-left">
+          <pre><code class="java">@Bean
+public Step step1() {
+  return this.stepBuilderFactory.get("step1")
+    .&lt;Vehicule, Vehicule&gt;chunk(2)
+    .reader(itemReader())
+    .writer(itemWriter())
+    .faultTolerant()
+    .retryLimit(3)
+    .retry(SQLException.class)
+    .build();
+}</code></pre>
+        </div>
+        <div class="container-fluid big-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le nombre d'essai et les exceptions sur lesquelles appliquer cette politique sont configurables
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="springbatch-errors-retry-skip" class="step slide">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Ignorer des éléments problématiques</h1>
+        <div class="container-fluid">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il arrive fréquemment que des éléments mal formés (lors de la
+            phase de lecture, ou de la phase de traitement) ou ne respectent pas les exigences fonctionnelles ou techniques. Afin d'éviter de
+            planter le <strong>Batch</strong> dès que l'on rencontre de tels éléments, il est possible de configurer le <strong>Batch</strong> pour
+            qu'il ignore les enregistrements dont le traitement a levé une exception.
+          </div>
+        </div>
+        <div class="container big-top-margin small-font text-left">
+          <pre><code class="java">@Bean
+public Step step1() {
+  return this.stepBuilderFactory.get("step1")
+    .&lt;Vehicule, Vehicule&gt;chunk(10)
+    .reader(flatFileItemReader())
+    .writer(itemWriter())
+    .faultTolerant()
+    .skipLimit(10)
+    .skip(FlatFileParseException.class)
+    .build();
+}</code></pre>
+        </div>
+        <div class="container-fluid big-top-margin">
+          <div class="alert alert-primary small-font" role="alert">
+            <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le nombre d'enregistrements à ignorer au maximum ainsi que les exceptions
+            à ignorer sont paramétrables au niveau du <strong>Job</strong>.
           </div>
         </div>
       </div>
