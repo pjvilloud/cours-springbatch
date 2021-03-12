@@ -1182,7 +1182,7 @@ public interface ItemWriter&lt;T&gt; {
 public EntityManagerFactory entityManagerFactory;
 
 @Bean
-public JpaItemWriter&lt;Commune&gt; writerJPA(){
+public JpaItemWriter&lt;Vehicule&gt; writerJPA(){
   return new JpaItemWriterBuilder&lt;Vehicule&gt;().entityManagerFactory(entityManagerFactory).build();
 }
 
@@ -1409,7 +1409,7 @@ public interface StepExecutionListener extends StepListener {
         <div class="container-fluid">
           <div class="alert alert-primary small-font" role="alert">
             <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le <strong>ChunkListener</strong> définit une méthode <code>beforeChunk</code> et <code>afterChunk</code>
-            permettant l'exécution d'instructions avant le traitement d'un <strong>Chunk</strong>, ou une fois ce dernier dernière terminé (possible donc au niveau d'un <strong>ItemReader</strong>
+            permettant l'exécution d'instructions avant le traitement d'un <strong>Chunk</strong>, ou une fois ce dernier terminé (possible donc au niveau d'un <strong>ItemReader</strong>
             ou d'un <strong>ItemWriter</strong>).
           </div>
         </div>
@@ -1443,7 +1443,7 @@ public interface ChunkListener extends StepListener {
     //Avant l'exécution du chunk
   }
 
-  @AfterStep
+  @AfterChunk
   public void afterChunk() throws Exception {
     //Une fois le chunk terminé
   }
@@ -1487,7 +1487,7 @@ public interface ItemProcessListener&lt;T, S&gt; extends StepListener {
     void afterProcess(T item, S result);
     void onProcessError(T item, Exception ex);
 }
-public interface ItemWriteListener&lt;T&gt; extends StepListener {
+public interface ItemWriteListener&lt;S&gt; extends StepListener {
     void beforeWrite(List&lt;? extends S&gt; items);
     void afterWrite(List&lt;? extends S&gt; items);
     void onWriteError(Exception ex, List&lt;? extends S&gt; items);
@@ -1505,7 +1505,7 @@ public interface ItemWriteListener&lt;T&gt; extends StepListener {
   public void afterProcess(Vehicule v, Vehicule r) throws Exception {
     //Une fois l'élément traité
   }
-  @AfterProcess
+  @OnProcessError
   public void onProcessError(Exception ex) throws Exception {
     //Lors d'une exception levée lors du traitement
   }
